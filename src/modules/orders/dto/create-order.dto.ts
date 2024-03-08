@@ -3,6 +3,9 @@ import { Type } from 'class-transformer';
 
 class OrderItemDto {
     @IsNotEmpty()
+    name: string;
+
+    @IsNotEmpty()
     productId: string;
 
     @IsNotEmpty()

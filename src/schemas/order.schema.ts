@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 const OrderItemSchema = new mongoose.Schema({
+    name: String,
     productId: mongoose.Schema.Types.ObjectId,
     quantity: Number,
 });

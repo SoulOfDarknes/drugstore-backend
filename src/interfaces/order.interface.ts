@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
 interface OrderItem {
+    name: string;
     productId: string;
     quantity: number;
 }
