@@ -10,6 +10,12 @@ class OrderItemDto {
 
     @IsNotEmpty()
     quantity: number;
+
+    @IsNotEmpty()
+    description: string;
+
+    @IsNotEmpty()
+    imageUrl?: string;
 }
 
 export class CreateOrderDto {

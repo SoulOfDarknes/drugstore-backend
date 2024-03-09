@@ -28,4 +28,15 @@ export class OrdersService {
     async delete(id: string): Promise<any> {
         return this.orderModel.findByIdAndDelete(id).exec();
     }
+
+    async findBySearchTerm(searchTerm: string): Promise<Order[]> {
+        if (searchTerm.includes('@')) {
+            return this.orderModel.find({ email: searchTerm }).exec();
+        } else if (!isNaN(Number(searchTerm))) {
+            return this.orderModel.find({ phone: searchTerm }).exec();
+        } else {
+            return this.orderModel.find({ _id: searchTerm }).exec();
+        }
+    }
+
 }

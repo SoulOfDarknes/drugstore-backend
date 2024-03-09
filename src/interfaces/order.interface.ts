@@ -4,6 +4,8 @@ interface OrderItem {
     name: string;
     productId: string;
     quantity: number;
+    description: string;
+    imageUrl?: string;
 }
 
 export interface Order extends Document {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Delete, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Order } from '../../interfaces/order.interface';
@@ -30,5 +30,10 @@ export class OrdersController {
     @Delete(':id')
     delete(@Param('id') id: string): Promise<any> {
         return this.ordersService.delete(id);
+    }
+
+    @Get('search')
+    search(@Query('searchTerm') searchTerm: string): Promise<Order[]> {
+        return this.ordersService.findBySearchTerm(searchTerm);
     }
 }
