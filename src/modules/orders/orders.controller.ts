@@ -12,14 +12,19 @@ export class OrdersController {
         return this.ordersService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string): Promise<Order> {
-        return this.ordersService.findOne(id);
+    @Get('search')
+    searchOrders(@Query() query: { email?: string, phone?: string, id?: string }): Promise<Order[]> {
+        return this.ordersService.search(query);
     }
 
     @Post()
     create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
         return this.ordersService.create(createOrderDto);
+    }
+
+    @Get(':id')
+    findOne(@Param('id') id: string): Promise<Order> {
+        return this.ordersService.findOne(id);
     }
 
     @Put(':id')
@@ -32,8 +37,5 @@ export class OrdersController {
         return this.ordersService.delete(id);
     }
 
-    @Get('search')
-    search(@Query('searchTerm') searchTerm: string): Promise<Order[]> {
-        return this.ordersService.findBySearchTerm(searchTerm);
-    }
+
 }

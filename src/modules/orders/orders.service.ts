@@ -29,14 +29,18 @@ export class OrdersService {
         return this.orderModel.findByIdAndDelete(id).exec();
     }
 
-    async findBySearchTerm(searchTerm: string): Promise<Order[]> {
-        if (searchTerm.includes('@')) {
-            return this.orderModel.find({ email: searchTerm }).exec();
-        } else if (!isNaN(Number(searchTerm))) {
-            return this.orderModel.find({ phone: searchTerm }).exec();
-        } else {
-            return this.orderModel.find({ _id: searchTerm }).exec();
+    async search(query: { email?: string, phone?: string, id?: string }): Promise<Order[]> {
+        let filter = {};
+        if (query.email) {
+            filter = { ...filter, email: query.email };
         }
+        if (query.phone) {
+            filter = { ...filter, phone: query.phone };
+        }
+        if (query.id) {
+            filter = { ...filter, _id: query.id };
+        }
+        return this.orderModel.find(filter).exec();
     }
 
 }
