@@ -1,15 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { Store } from '../../interfaces/store.interface';
+import { Drug } from 'src/interfaces/drug.interface';
 
 @Controller('stores')
 export class StoresController {
     constructor(private readonly storesService: StoresService) { }
 
     @Get()
-    findAll(): Promise<Store[]> {
-        return this.storesService.findAll();
+    findAll(@Query('sortBy') sortBy?: string, @Query('order') order?: string, @Query('favoritesFirst') favoritesFirst?: string): Promise<Store[]> {
+        return this.storesService.findAll(sortBy, order, favoritesFirst === 'true');
     }
+
 
     @Get(':id')
     findOne(@Param('id') id: string): Promise<Store> {
@@ -30,4 +32,16 @@ export class StoresController {
     delete(@Param('id') id: string): Promise<void> {
         return this.storesService.delete(id);
     }
+
+    @Put(':id/favorite')
+    markAsFavorite(@Param('id') id: string): Promise<Drug> {
+        return this.storesService.markAsFavorite(id);
+    }
+
+    @Delete(':id/favorite')
+    removeFromFavorites(@Param('id') id: string): Promise<Drug> {
+        return this.storesService.removeFromFavorites(id);
+    }
+
 }
+

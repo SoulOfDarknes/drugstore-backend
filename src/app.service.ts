@@ -17,20 +17,19 @@ export class AppService {
       let drug = await this.drugModel.findOne({ name: drugData.name }).exec();
       if (!drug) {
         drug = await this.drugModel.create(drugData);
-      } else {
-        throw new HttpException(`Drug ${drugData.name} already exists.`, HttpStatus.CONFLICT);
       }
-      return drug;
+      return drug._id;
     };
 
-    await Promise.all(drugData.map(drug => createOrGetDrug(drug).catch(error => { throw error; })));
+    const drugIds = await Promise.all(drugData.map(drug => createOrGetDrug(drug)));
 
     for (const store of stores) {
-      const existingStore = await this.storeModel.findOne({ location: store.location }).exec();
+      const existingStore = await this.storeModel.findOne({ name: store.name }).exec();
       if (!existingStore) {
-        await this.storeModel.create(store);
-      } else {
-        throw new HttpException(`Store at ${store.location} already exists.`, HttpStatus.CONFLICT);
+        await this.storeModel.create({
+          ...store,
+          drugs: drugIds
+        });
       }
     }
   }
