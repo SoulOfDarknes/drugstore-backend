@@ -5,7 +5,8 @@ interface OrderItem {
     productId: string;
     quantity: number;
     description: string;
-    imageUrl?: string;
+    imageUrl: string;
+    price: number;
 }
 
 export interface Order extends Document {

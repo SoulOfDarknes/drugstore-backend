@@ -15,7 +15,10 @@ class OrderItemDto {
     description: string;
 
     @IsNotEmpty()
-    imageUrl?: string;
+    imageUrl: string;
+
+    @IsNotEmpty()
+    price: number;
 }
 
 export class CreateOrderDto {

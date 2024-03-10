@@ -4,6 +4,9 @@ const OrderItemSchema = new mongoose.Schema({
     name: String,
     productId: mongoose.Schema.Types.ObjectId,
     quantity: Number,
+    description: String,
+    imageUrl: String,
+    price: Number,
 });
 
 export const OrderSchema = new mongoose.Schema({
